@@ -1,0 +1,40 @@
+import java.util.*;
+
+class Solution {
+    public String solution(String[] participant, String[] completion) {
+        String answer = "";
+        
+        HashMap<String,Integer> map = new HashMap<>();
+        
+        //System.out.println("==null is "+ (map.get("")== null));
+        
+        for(int i=0;i<participant.length;i++){
+            map.put(participant[i],
+                    (map.get(participant[i])==null ? 1: map.get(participant[i])+1));
+        }
+        
+        //System.out.println(map);
+        //System.out.println(map.size());
+        
+        for(int i=0;i<completion.length;i++){
+            map.put(completion[i], map.get(completion[i])-1);
+        }
+        
+        //System.out.println(map);
+        
+        for(String s : map.keySet()){
+            if(map.get(s) == 1) answer = s;
+        }
+        
+        /*stream 테스트*/
+        int[] temp  = {0,1,2,3,4,5,6};
+        int test = Arrays.stream(temp)
+            .sum();
+        // int test = temp.stream()
+        //     .sum();
+        System.out.println(test);
+        
+        
+        return answer;
+    }
+}
