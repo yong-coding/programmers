@@ -1,0 +1,70 @@
+import java.util.*;
+
+class Solution {
+    public int[] solution(String[] genres, int[] plays) {
+        List<Integer> answer_list = new ArrayList<>();
+        
+        HashMap<String,Integer> total = new HashMap<>();
+        //HashMap<String,Integer> song = new HashMap<>();
+        
+        for(int i=0; i<genres.length; i++){
+            total.put(genres[i], total.getOrDefault(genres[i],0)+plays[i] );
+        }
+        
+        
+        // System.out.println(total);
+        
+        List<String> list = new ArrayList<>();
+        for(String s : total.keySet()){
+            list.add(s);
+        }
+        
+        // 정렬
+        Collections.sort(list, (o1, o2) -> total.get(o2) - total.get(o1) );
+        // System.out.println(list);
+        
+        for(int i=0; i<list.size(); i++){
+            System.out.println(list.get(i));
+            int one = 0;
+            int first_song = -1;
+            int two = 0;
+            int second_song = -1;
+            //top 2 뽑기
+            //list.get(0) = classic
+            for(int j=0; j<plays.length; j++){
+                
+                // 해당장르이면
+                if(genres[j].equals(list.get(i))){
+                    if(one < plays[j] ){
+                        two = one;
+                        second_song = first_song;
+                        one = plays[j];
+                        first_song = j;
+                    }else if(two < plays[j]){
+                        two = plays[j];
+                        second_song = j;
+                    }
+                    
+                }
+                
+            }
+            // System.out.println("one is " + one);
+            // System.out.println("two is " + two);
+            // System.out.println("first_song is " + first_song);
+            // System.out.println("second_song is " + second_song);
+            answer_list.add(first_song);
+            if(second_song != -1) answer_list.add(second_song) ;          
+            
+        }
+        
+        // list -> array 
+        // Integer -> int 형 전환필요!
+        int[] answer = new int[answer_list.size()];
+        for(int i=0; i<answer.length; i++){
+            answer[i] = answer_list.get(i);
+        }
+        
+        
+        return answer;
+    }
+}
